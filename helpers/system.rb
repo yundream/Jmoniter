@@ -38,5 +38,16 @@ module SysInfo
 		# /proc/cmdline
 		def bootparameter
 		end
+
+		# /proc/[pid]
+	end
+	class Network 
+		# /network/interface
+
+		# /network/routes
+
+		# /network/vlan
+
+		# /network/netstat
 	end
 end
