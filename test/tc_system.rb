@@ -14,4 +14,10 @@ describe 'system information' do
 		json = JSON.parse(body)	
 		json['uptime'].should be > 0 
 	end
+	it ": hostname" do
+		get '/system/hostname'
+		body = last_response.body	
+		json = JSON.parse(body)
+		json['hostname'].should match(/[a-zA-Z0-9\-_\.]+/) 
+	end
 end

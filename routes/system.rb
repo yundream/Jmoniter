@@ -6,4 +6,8 @@ class MyApp < Sinatra::Application
 		@body = @sysInfo.sysUptime
 		erb :json
 	end
+	get "/system/hostname" do
+		@body = @sysInfo.hostname
+		erb :json
+	end
 end
