@@ -12,12 +12,24 @@ describe 'system information' do
 		get '/system/uptime'
 		body = last_response.body
 		json = JSON.parse(body)	
-		json['uptime'].should be > 0 
+		json['items']['uptime'].should be > 0 
 	end
 	it ": hostname" do
 		get '/system/hostname'
 		body = last_response.body	
 		json = JSON.parse(body)
-		json['hostname'].should match(/[a-zA-Z0-9\-_\.]+/) 
+		json['items']['hostname'].should match(/[a-zA-Z0-9\-_\.]+/) 
+	end
+	it ": cpu infos" do
+		get '/system/cpus'
+		body = last_response.body	
+		json = JSON.parse(body)
+		json['items']['cpunum'].should be > 0 
+	end
+	it ": mem info" do
+		get '/system/meminfo'
+		body = last_response.body
+		json = JSON.parse(body)
+		json['items']['MemTotal'].should be > 0 
 	end
 end

@@ -3,11 +3,19 @@ class MyApp < Sinatra::Application
 		@sysInfo = SysInfo::System.new   
 	end
 	get "/system/uptime" do
-		@body = @sysInfo.sysUptime
+		@items = @sysInfo.sysUptime
 		erb :json
 	end
 	get "/system/hostname" do
-		@body = @sysInfo.hostname
+		@items = @sysInfo.hostname
+		erb :json
+	end
+	get "/system/cpus" do
+		@items = @sysInfo.cpus
+		erb :json
+	end
+	get "/system/meminfo" do
+		@items = @sysInfo.meminfo
 		erb :json
 	end
 end
