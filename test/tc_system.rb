@@ -32,4 +32,9 @@ describe 'system information' do
 		json = JSON.parse(body)
 		json['items']['MemTotal'].should be > 0 
 	end
+	it ": disk info" do
+		get '/system/disk'
+		body = last_response.body
+		json = JSON.parse(body)
+	end
 end

@@ -18,4 +18,8 @@ class MyApp < Sinatra::Application
 		@items = @sysInfo.meminfo
 		erb :json
 	end
+	get "/system/disk" do
+		@items = @sysInfo.disk
+		erb :json
+	end
 end
