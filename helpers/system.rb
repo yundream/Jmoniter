@@ -82,10 +82,34 @@ module SysInfo
 		end
 
 		# /proc/cmdline
-		def bootparameter
+		def cmdline 
+			h = Hash.new
+			File.readlines('/proc/cmdline').each do |line|
+				h['cmdline'] = line.chomp
+			end
+			return h.to_json
 		end
 
 		# /proc/[pid]
+		def processes 
+			h = Hash.new
+			processes = Array.new
+			process_num = 0
+			Dir.foreach('/proc') do |entry|
+				pid_file = File.join('/proc', entry)
+				next if (entry == '.') && (entry == '..')
+				next if !File.directory?(pid_file)
+				exe_file = File.join(pid_file, 'exe')
+				if File.file?(exe_file) then
+					processes.push( File.readlink(exe_file))
+
+				end
+				process_num = process_num +1
+			end
+			h['num'] = process_num
+			h['process'] = processes
+			return h.to_json
+		end
 	end
 	class Network 
 		# /network/interface

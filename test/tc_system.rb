@@ -37,4 +37,16 @@ describe 'system information' do
 		body = last_response.body
 		json = JSON.parse(body)
 	end
+	it ": cmdline" do
+		get '/system/cmdline'
+		body = last_response.body
+		json = JSON.parse(body)
+		json['items']['cmdline'].should match(/^BOOT_IMAGE=/) 
+	end
+	it ": process list" do
+		get '/system/processes'
+		body = last_response.body
+		json = JSON.parse(body)
+		json['items']['num'].should be > 0 
+	end
 end

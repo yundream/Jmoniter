@@ -22,4 +22,16 @@ class MyApp < Sinatra::Application
 		@items = @sysInfo.disk
 		erb :json
 	end
+	get "/system/cmdline" do
+		@items = @sysInfo.cmdline
+		erb :json
+	end
+	get "/system/cmdline" do
+		@items = @sysInfo.cmdline
+		erb :json
+	end
+	get "/system/processes" do
+		@items = @sysInfo.processes
+		erb :json
+	end
 end
