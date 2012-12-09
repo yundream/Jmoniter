@@ -49,4 +49,10 @@ describe 'system information' do
 		json = JSON.parse(body)
 		json['items']['num'].should be > 0 
 	end
+	it ": process info" do
+		get '/system/processes/chrom'
+		body = last_response.body
+		json = JSON.parse(body)
+		json['items']['num'].should be > 0
+	end
 end

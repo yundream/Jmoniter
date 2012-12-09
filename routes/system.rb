@@ -34,4 +34,8 @@ class MyApp < Sinatra::Application
 		@items = @sysInfo.processes
 		erb :json
 	end
+	get "/system/processes/:name" do
+		@items = @sysInfo.processes params[:name] 
+		erb :json
+	end
 end

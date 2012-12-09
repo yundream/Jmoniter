@@ -91,20 +91,27 @@ module SysInfo
 		end
 
 		# /proc/[pid]
-		def processes 
+		def processes name=nil
 			h = Hash.new
 			processes = Array.new
 			process_num = 0
 			Dir.foreach('/proc') do |entry|
+
 				pid_file = File.join('/proc', entry)
 				next if (entry == '.') && (entry == '..')
 				next if !File.directory?(pid_file)
 				exe_file = File.join(pid_file, 'exe')
 				if File.file?(exe_file) then
-					processes.push( File.readlink(exe_file))
-
+					if (name != nil) then
+						if File.readlink(exe_file) =~ /#{name}/ then
+							processes.push(File.readlink(exe_file))
+							process_num = process_num +1
+						end
+					else
+						processes.push( File.readlink(exe_file))
+						process_num = process_num +1
+					end
 				end
-				process_num = process_num +1
 			end
 			h['num'] = process_num
 			h['process'] = processes
