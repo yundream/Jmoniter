@@ -66,19 +66,28 @@ module SysInfo
 
 		# /proc/partitions & /etc/fstab & statfs & diskstatus 
 		def disk
-			diskinfo = Hash.new
-			IO.foreach('/proc/partitions') do |line|
-				if line =~ /[ ]+[0-9]+/ then
-					line = line.chomp
-					info = line.split(/[ ]+/)
-					if (info[2] == "0") then
-						name = info[4]
-						info.shift
-						diskinfo[name] = info
+			diskinfo = Array.new
+			cmdout = IO.popen('df', 'r')
+			Process.wait
+			if $? == 0 then
+				linenum = 0
+				cmdout.each_line do |line|
+					if linenum == 0 then
+						linenum = 1
+						next
 					end
+					line = line.chomp
+					items = line.split(/[ ]+/)
+					entry = Hash.new
+					entry['filesystem']=items[0]
+					entry['size']=items[1]
+					entry['used']=items[2]
+					entry['available']=items[3]
+					entry['mount']=items[4]
+					diskinfo.push(entry)
 				end
 			end
-			return diskinfo.to_json
+			diskinfo.to_json
 		end
 
 		# /proc/cmdline

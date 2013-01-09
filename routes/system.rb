@@ -38,4 +38,8 @@ class MyApp < Sinatra::Application
 		@items = @sysInfo.processes params[:name] 
 		erb :json
 	end
+	get "/system/fstab" do
+		@items = @sysInfo.processes params[:name] 
+		erb :json
+	end
 end
